@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 <body>
+  <canvas id="dot-canvas" aria-hidden="true"></canvas>
+
   <nav class="site-nav">
     <a href="{{ '/' | relative_url }}" class="logo">
       <b>archi</b>.curation
@@ -58,7 +60,7 @@
 
   <script>
     (function () {
-      // ── Wrap each H3 (+ following content until next H2/H3/HR) in a .card div ──
+      // ── Wrap each H3 (+ following content until next H2/H3/HR) in a .card ──
       function wrapH3Cards() {
         var content = document.querySelector('.content');
         if (!content) return;
@@ -89,11 +91,102 @@
         bar.style.width = w + '%';
       }
 
+      // ── Mouse-reactive dot canvas ──
+      function initDotCanvas() {
+        var canvas = document.getElementById('dot-canvas');
+        if (!canvas) return;
+
+        // skip on touch-only devices (no hover capability)
+        var hasHover = window.matchMedia('(hover: hover)').matches;
+        if (!hasHover) {
+          canvas.style.display = 'none';
+          return;
+        }
+
+        // honor reduced motion preference
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          canvas.style.opacity = '0.4';
+        }
+
+        var ctx = canvas.getContext('2d');
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var dots = [];
+        var mouse = { x: -1e6, y: -1e6 };
+        var spacing = 38;
+        var radius = 180;
+
+        function resize() {
+          var w = window.innerWidth;
+          var h = window.innerHeight;
+          canvas.width = w * dpr;
+          canvas.height = h * dpr;
+          canvas.style.width = w + 'px';
+          canvas.style.height = h + 'px';
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+          dots = [];
+          var cols = Math.ceil(w / spacing) + 1;
+          var rows = Math.ceil(h / spacing) + 1;
+          for (var i = 0; i < cols; i++) {
+            for (var j = 0; j < rows; j++) {
+              dots.push({ bx: i * spacing, by: j * spacing });
+            }
+          }
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          var r2 = radius * radius;
+          for (var k = 0; k < dots.length; k++) {
+            var d = dots[k];
+            var dx = d.bx - mouse.x;
+            var dy = d.by - mouse.y;
+            var dist2 = dx * dx + dy * dy;
+
+            var alpha = 0.07;
+            var size = 0.9;
+            var ox = 0, oy = 0;
+
+            if (dist2 < r2) {
+              var dist = Math.sqrt(dist2);
+              var t = 1 - dist / radius;
+              alpha = 0.07 + t * 0.55;
+              size = 0.9 + t * 1.6;
+              var ang = Math.atan2(dy, dx);
+              var push = t * 7;
+              ox = Math.cos(ang) * push;
+              oy = Math.sin(ang) * push;
+            }
+
+            ctx.beginPath();
+            ctx.arc(d.bx + ox, d.by + oy, size, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(168, 184, 212, ' + alpha + ')';
+            ctx.fill();
+          }
+          requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('mousemove', function (e) {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+        }, { passive: true });
+
+        window.addEventListener('mouseleave', function () {
+          mouse.x = -1e6;
+          mouse.y = -1e6;
+        });
+
+        window.addEventListener('resize', resize, { passive: true });
+        resize();
+        requestAnimationFrame(draw);
+      }
+
       function init() {
         wrapH3Cards();
         scrollProgress();
         window.addEventListener('scroll', scrollProgress, { passive: true });
         window.addEventListener('resize', scrollProgress, { passive: true });
+        initDotCanvas();
       }
 
       if (document.readyState === 'loading') {

@@ -45,6 +45,20 @@ body::before {
   background-size: 128px;
 }
 
+/* ── mouse-reactive dot canvas (behind everything) ── */
+#dot-canvas {
+  position: fixed; inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+/* lift content above the dot canvas */
+.site-nav, .scroll-progress, .hero, .content, .site-footer {
+  position: relative;
+  z-index: 1;
+}
+.site-nav { z-index: 100; }
+.scroll-progress { z-index: 101; }
+
 /* ── links ── */
 a {
   color: var(--accent-blue);
@@ -107,13 +121,28 @@ pre code {
 }
 .site-nav .back-link:hover { color: var(--text-bright); }
 
-/* ── scroll progress bar ── */
+/* ── scroll progress bar (multi-color shimmer) ── */
 .scroll-progress {
   position: fixed; top: 52px; left: 0;
   height: 2px; z-index: 101;
-  background: linear-gradient(90deg, var(--accent), var(--accent-purple));
   width: 0%;
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    var(--accent-blue) 22%,
+    var(--accent-purple) 45%,
+    var(--accent-green) 68%,
+    var(--accent) 100%
+  );
+  background-size: 220% 100%;
+  background-position: 0% 0%;
+  animation: scrollShimmer 7s linear infinite;
   transition: width 0.1s linear;
+  box-shadow: 0 0 12px rgba(200, 149, 108, 0.3);
+}
+@keyframes scrollShimmer {
+  0%   { background-position:   0% 0%; }
+  100% { background-position: 220% 0%; }
 }
 
 /* ── hero ── */
