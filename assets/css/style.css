@@ -220,11 +220,19 @@ pre code {
 
 /* ── main container ── */
 .container {
-  max-width: 880px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 0 clamp(24px, 6vw, 48px);
+  padding: 0 clamp(24px, 6vw, 80px);
 }
 .content { padding-bottom: 80px; }
+
+/* keep long-form text comfortable inside the wider container */
+.content > p,
+.content > blockquote,
+.content > ul:not(.episode-list),
+.content > ol {
+  max-width: 760px;
+}
 
 /* hide markdown H1 (hero handles title) */
 .content > h1:first-child { display: none; }
