@@ -1,0 +1,14 @@
+title: 건축 AI 큐레이션
+description: 건축 · 현상설계 · 건축 온톨로지 자동 큐레이션 (월·수·금 09:00 KST)
+theme: jekyll-theme-cayman
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+encoding: utf-8
+exclude:
+  - .claude
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
