@@ -18,12 +18,12 @@ stats:
 
 ## 회차 목록
 
-- [시범회차 2 — Revit MCP, text-to-CAD, 로보틱 파브](2026-05-10_일-2.html)
-- [시범회차 1 — IFC 라이브러리, 이미지→3D, BIM 데이터, 평면 ML](2026-05-10_일.html)
-- [2026-05-09 (토) — test · IFC LLM, NeRF + 건축, generative urban](#)
-- [2026-05-08 (금) — test · Rhino plugin AI, 평면 segmentation](#)
-- [2026-05-07 (목) — test · Revit Dynamo + LLM, depth → BIM](#)
 - [2026-05-06 (수) — test · Building footprint, GAN 외관 생성](#)
+- [2026-05-07 (목) — test · Revit Dynamo + LLM, depth → BIM](#)
+- [2026-05-08 (금) — test · Rhino plugin AI, 평면 segmentation](#)
+- [2026-05-09 (토) — test · IFC LLM, NeRF + 건축, generative urban](#)
+- [2026-05-10 (일) — 시범회차 1 · IFC 라이브러리, 이미지→3D, BIM 데이터, 평면 ML](2026-05-10_일.html)
+- [2026-05-10 (일) — 시범회차 2 · Revit MCP, text-to-CAD, 로보틱 파브](2026-05-10_일-2.html)
 {:.episode-list}
 
 *매일 08:00 KST 새 회차 자동 추가됩니다.*

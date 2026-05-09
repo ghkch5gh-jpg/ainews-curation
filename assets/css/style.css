@@ -376,9 +376,9 @@ pre code {
 .content ul.episode-list:has(li:nth-child(4)) {
   max-height: 310px;
   overflow-y: auto;
-  /* fade-out at bottom hints more content */
-  mask-image: linear-gradient(to bottom, black calc(100% - 36px), transparent);
-  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 36px), transparent);
+  /* fade-out at TOP — older entries fade away, latest at bottom is full opacity */
+  mask-image: linear-gradient(to bottom, transparent, black 36px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 36px);
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
 }
@@ -402,7 +402,7 @@ pre code {
   position: relative;
 }
 .content ul.episode-list:has(li:nth-child(4)) + p::before {
-  content: '↓ 스크롤로 이전 회차 보기';
+  content: '↑ 위로 스크롤하면 이전 회차';
   display: block;
   font-family: var(--mono);
   font-size: 0.7rem;
