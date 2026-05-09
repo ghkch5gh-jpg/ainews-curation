@@ -184,9 +184,11 @@
       // ── Style episode list links into editorial entries ──
       function styleEpisodeCards() {
         var items = document.querySelectorAll('ul.episode-list > li');
+        var total = items.length;
         items.forEach(function (li, i) {
-          // chronological numbering: top (oldest) = 01, bottom (newest) = total
-          var num = i + 1;
+          // chronological numbering: oldest = 01, newest = highest.
+          // list is rendered newest-first (top), so topmost gets highest number.
+          var num = total - i;
           li.setAttribute('data-num', num.toString().padStart(2, '0'));
 
           var a = li.querySelector(':scope > a');
@@ -206,13 +208,7 @@
             (title ? '<span class="ep-title">' + title + '</span>' : '') +
             '<span class="ep-arrow" aria-hidden="true">→</span>';
         });
-
-        // auto-scroll the episode list container to the bottom on load
-        // so the latest episode is visible without manual scroll
-        var list = document.querySelector('ul.episode-list');
-        if (list && list.scrollHeight > list.clientHeight) {
-          list.scrollTop = list.scrollHeight;
-        }
+        // (no auto-scroll — latest is already at top)
       }
 
       function init() {
