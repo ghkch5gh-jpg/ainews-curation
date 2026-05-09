@@ -20,6 +20,10 @@ stats:
 
 - [2026-05-10 (일) · 시범 ② — Revit MCP, text-to-CAD, 로보틱 파브](2026-05-10_일-2.html)
 - [2026-05-10 (일) — 시범 회차 ①](2026-05-10_일.html)
+- [2026-05-09 (토) — IFC LLM, NeRF + 건축, generative urban](#)
+- [2026-05-08 (금) — Rhino plugin AI, 평면 segmentation, 생성형 매스](#)
+- [2026-05-07 (목) — Revit Dynamo + LLM, depth → BIM](#)
+- [2026-05-06 (수) — Building footprint, GAN 외관 생성](#)
 {:.episode-list}
 
 *매일 08:00 KST 새 회차 자동 추가됩니다.*
