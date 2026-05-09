@@ -22,6 +22,8 @@
     {% endif %}
   </nav>
 
+  <div class="scroll-progress"></div>
+
   <header class="hero">
     {% if page.eyebrow %}
     <div class="hero-eyebrow">{{ page.eyebrow }}</div>
@@ -29,6 +31,16 @@
     <h1 class="hero-title">{{ page.hero_title | default: page.title }}</h1>
     {% if page.description %}
     <p class="hero-desc">{{ page.description }}</p>
+    {% endif %}
+    {% if page.stats %}
+    <div class="hero-stats">
+      {% for stat in page.stats %}
+      <div class="hero-stat">
+        <div class="num">{{ stat.num }}</div>
+        <div class="lbl">{{ stat.lbl }}</div>
+      </div>
+      {% endfor %}
+    </div>
     {% endif %}
   </header>
 
@@ -43,5 +55,53 @@
       <p>Built with Claude Code</p>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      // ── Wrap each H3 (+ following content until next H2/H3/HR) in a .card div ──
+      function wrapH3Cards() {
+        var content = document.querySelector('.content');
+        if (!content) return;
+        var h3s = Array.from(content.querySelectorAll(':scope > h3'));
+        h3s.forEach(function (h3) {
+          if (h3.parentElement.classList.contains('card')) return;
+          var card = document.createElement('div');
+          card.className = 'card';
+          h3.parentNode.insertBefore(card, h3);
+          card.appendChild(h3);
+          var next = card.nextSibling;
+          while (next) {
+            var tag = next.tagName;
+            if (tag === 'H3' || tag === 'H2' || tag === 'HR') break;
+            var moveNode = next;
+            next = next.nextSibling;
+            card.appendChild(moveNode);
+          }
+        });
+      }
+
+      // ── Scroll progress bar ──
+      function scrollProgress() {
+        var bar = document.querySelector('.scroll-progress');
+        if (!bar) return;
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        var w = h > 0 ? (window.scrollY / h) * 100 : 0;
+        bar.style.width = w + '%';
+      }
+
+      function init() {
+        wrapH3Cards();
+        scrollProgress();
+        window.addEventListener('scroll', scrollProgress, { passive: true });
+        window.addEventListener('resize', scrollProgress, { passive: true });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
 </body>
 </html>

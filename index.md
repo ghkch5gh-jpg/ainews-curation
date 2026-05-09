@@ -5,6 +5,15 @@ title: 건축 AI 큐레이션
 eyebrow: ARCHITECTURE × AI · WEEKLY
 hero_title: "건축 <em>AI</em> 큐레이션"
 description: 건축 · 현상설계 · 건축 온톨로지 관련 AI · 오픈소스 · 논문 자동 큐레이션. 월 · 수 · 금 09:00 KST 자동 갱신. 모든 항목은 URL 그대로 Claude Code에 박으면 작업이 시작되는 형태.
+stats:
+  - num: "3×"
+    lbl: "Per Week"
+  - num: "6"
+    lbl: "Sources"
+  - num: "5"
+    lbl: "GitHub Trending"
+  - num: "1"
+    lbl: "Filter Rule"
 ---
 
 ## 회차 목록

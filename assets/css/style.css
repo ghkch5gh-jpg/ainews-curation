@@ -35,7 +35,7 @@ body {
   overflow-x: hidden;
 }
 
-/* subtle film grain overlay */
+/* ── film grain overlay ── */
 body::before {
   content: '';
   position: fixed; inset: 0; z-index: 9999;
@@ -61,14 +61,13 @@ code {
   background: none;
   padding: 0;
 }
-
 pre {
-  background: var(--surface);
+  background: rgba(0, 0, 0, 0.35);
   border: 1px solid var(--border);
   padding: 1.1rem 1.3rem;
   border-radius: 4px;
   overflow-x: auto;
-  margin: 1.5rem 0;
+  margin: 1.3rem 0;
   font-family: var(--mono);
   font-size: 0.84em;
   line-height: 1.65;
@@ -107,6 +106,15 @@ pre code {
   display: flex; align-items: center; gap: 6px;
 }
 .site-nav .back-link:hover { color: var(--text-bright); }
+
+/* ── scroll progress bar ── */
+.scroll-progress {
+  position: fixed; top: 52px; left: 0;
+  height: 2px; z-index: 101;
+  background: linear-gradient(90deg, var(--accent), var(--accent-purple));
+  width: 0%;
+  transition: width 0.1s linear;
+}
 
 /* ── hero ── */
 .hero {
@@ -161,6 +169,25 @@ pre code {
   max-width: 640px;
   line-height: 1.85;
 }
+.hero-stats {
+  display: flex; gap: 48px; flex-wrap: wrap;
+  margin-top: 44px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.hero-stat .num {
+  font-family: var(--serif);
+  font-size: 2.3em; font-weight: 700;
+  color: var(--text-bright);
+  letter-spacing: -0.04em; line-height: 1;
+}
+.hero-stat .lbl {
+  font-family: var(--mono);
+  font-size: 0.62em; font-weight: 400;
+  color: var(--text-dim);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-top: 8px;
+}
 
 /* ── main container ── */
 .container {
@@ -168,17 +195,12 @@ pre code {
   margin: 0 auto;
   padding: 0 clamp(24px, 6vw, 48px);
 }
+.content { padding-bottom: 80px; }
 
-.content {
-  padding-bottom: 80px;
-}
+/* hide markdown H1 (hero handles title) */
+.content > h1:first-child { display: none; }
 
-/* hide markdown H1 (hero shows title) */
-.content > h1:first-child {
-  display: none;
-}
-
-/* ── markdown headings ── */
+/* ── H2 (section heading) ── */
 .content h2 {
   font-family: var(--serif);
   font-size: clamp(1.55em, 3vw, 2.05em);
@@ -199,16 +221,15 @@ pre code {
   background: var(--accent);
 }
 .content > h2:first-child,
-.content > h2:nth-child(2) {
-  margin-top: 1.2rem;
-}
+.content > h2:nth-child(2) { margin-top: 1.2rem; }
 
+/* ── H3 inside .card (each item) ── */
 .content h3 {
   font-family: var(--sans);
   font-size: 1.18rem;
   font-weight: 700;
   color: var(--text-bright);
-  margin-top: 2.5rem;
+  margin-top: 0;
   margin-bottom: 0.55rem;
   letter-spacing: -0.01em;
   line-height: 1.4;
@@ -216,6 +237,7 @@ pre code {
 .content h3 a { color: var(--text-bright); }
 .content h3 a:hover { color: var(--accent); }
 
+/* H4 — small uppercase mono labels (e.g. 현상설계 적용) */
 .content h4 {
   font-family: var(--mono);
   font-size: 0.7rem;
@@ -223,50 +245,62 @@ pre code {
   color: var(--accent);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-top: 1.5rem;
+  margin-top: 1.4rem;
   margin-bottom: 0.5rem;
 }
 
-/* ── text ── */
-.content p {
-  margin: 1rem 0;
-  color: var(--text);
+/* ── Card (auto-wrapped by JS around each H3 + content) ── */
+.content .card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.7rem 1.9rem;
+  margin: 1.4rem 0;
+  border-radius: 6px;
+  transition: border-color 0.2s ease;
+  position: relative;
 }
-.content strong {
-  color: var(--text-bright);
-  font-weight: 700;
+.content .card:hover { border-color: var(--border-hover); }
+.content .card > *:last-child { margin-bottom: 0; }
+.content .card > *:first-child { margin-top: 0; }
+
+/* meta line right after card title (★★★ | source | ⭐ | date) */
+.content .card h3 + p {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  margin: 0.2rem 0 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--border);
 }
-.content em {
+.content .card h3 + p strong {
   color: var(--accent);
-  font-style: italic;
+  font-weight: 500;
 }
 
-/* ── blockquote ── */
+/* ── text ── */
+.content p { margin: 1rem 0; color: var(--text); }
+.content strong { color: var(--text-bright); font-weight: 700; }
+.content em { color: var(--accent); font-style: italic; }
+
+/* ── blockquote (e.g. 시범 회차 메모) ── */
 .content blockquote {
   border-left: 2px solid var(--accent);
-  padding: 0.6rem 0 0.6rem 1.4rem;
+  padding: 0.7rem 0 0.7rem 1.4rem;
   margin: 1.8rem 0;
   background: rgba(200, 149, 108, 0.04);
   font-style: italic;
-}
-.content blockquote p {
   color: var(--text);
-  margin: 0.3rem 0;
 }
+.content blockquote p { color: var(--text); margin: 0.3rem 0; }
 
 /* ── lists ── */
-.content ul, .content ol {
-  padding-left: 1.6rem;
-  margin: 1rem 0;
-}
-.content li {
-  margin: 0.45rem 0;
-  color: var(--text);
-}
+.content ul, .content ol { padding-left: 1.6rem; margin: 0.8rem 0; }
+.content li { margin: 0.4rem 0; color: var(--text); }
 .content li::marker { color: var(--text-dim); }
 .content li > p { margin: 0.3rem 0; }
 
-/* ── hr (gradient) ── */
+/* ── HR (gradient divider) ── */
 .content hr {
   border: none;
   height: 1px;
@@ -274,12 +308,12 @@ pre code {
   margin: 4rem 0;
 }
 
-/* ── tables ── */
+/* ── Tables ── */
 .content table {
   width: 100%;
   border-collapse: collapse;
   margin: 2rem 0;
-  font-size: 0.93em;
+  font-size: 0.92em;
   background: var(--surface);
   border: 1px solid var(--border);
   display: block;
@@ -323,12 +357,16 @@ pre code {
   .site-nav { padding: 0 18px; height: 48px; }
   .site-nav .logo { font-size: 0.78em; }
   .site-nav .back-link { font-size: 0.68em; }
+  .scroll-progress { top: 48px; }
   .hero { padding: 56px 24px 40px; }
   .hero-eyebrow { font-size: 0.68em; margin-bottom: 18px; }
   .hero-title { font-size: clamp(2em, 9vw, 2.7em); margin-bottom: 20px; }
   .hero-desc { font-size: 0.96rem; }
-  .container { padding: 0 24px; }
+  .hero-stats { gap: 28px; margin-top: 32px; padding-top: 22px; }
+  .hero-stat .num { font-size: 1.9em; }
+  .container { padding: 0 22px; }
   .content h2 { font-size: 1.4em; margin-top: 3.2rem; padding-top: 1.5rem; }
-  .content h3 { font-size: 1.08rem; margin-top: 2rem; }
+  .content h3 { font-size: 1.08rem; }
+  .content .card { padding: 1.3rem 1.4rem; }
   .content hr { margin: 3rem 0; }
 }
