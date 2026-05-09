@@ -307,6 +307,32 @@ pre code {
   font-weight: 500;
 }
 
+/* paragraph that starts with a strong "label:" gets label treatment
+   (e.g. "건축 활용:", "한 줄:", "왜 지금:") */
+.content .card p > strong:first-child {
+  display: inline-block;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.92em;
+  letter-spacing: 0.01em;
+  margin-right: 4px;
+}
+/* small accent bar before label paragraphs */
+.content .card p:has(> strong:first-child) {
+  position: relative;
+  padding-left: 14px;
+  margin: 1.1rem 0;
+}
+.content .card p:has(> strong:first-child)::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.55em;
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
 /* ── text ── */
 .content p { margin: 1rem 0; color: var(--text); }
 .content strong { color: var(--text-bright); font-weight: 700; }
