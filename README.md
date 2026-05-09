@@ -1,6 +1,7 @@
 ---
 layout: default
 title: 건축 AI 큐레이션
+permalink: /
 ---
 
 # 건축 AI 큐레이션
