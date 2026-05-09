@@ -183,9 +183,16 @@
 
       // ── Style episode list links into editorial entries ──
       function styleEpisodeCards() {
-        var links = document.querySelectorAll('ul.episode-list > li > a');
-        links.forEach(function (a) {
-          if (a.querySelector('.ep-title')) return; // already processed
+        var items = document.querySelectorAll('ul.episode-list > li');
+        var total = items.length;
+        items.forEach(function (li, i) {
+          // chronological numbering: oldest = 1, newest = highest
+          // list is rendered newest-first (top), so topmost item gets highest number
+          var num = total - i;
+          li.setAttribute('data-num', num.toString().padStart(2, '0'));
+
+          var a = li.querySelector(':scope > a');
+          if (!a || a.querySelector('.ep-title')) return;
           var text = a.textContent.trim();
           var sepIdx = text.indexOf(' — ');
           var meta, title;

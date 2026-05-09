@@ -368,7 +368,6 @@ pre code {
   list-style: none;
   padding-left: 0;
   margin: 1.8rem 0 1.5rem;
-  counter-reset: episode;
   border-top: 1px solid var(--border);
   position: relative;
 }
@@ -415,7 +414,6 @@ pre code {
 .content ul.episode-list li {
   margin: 0;
   padding: 0;
-  counter-increment: episode;
   border-bottom: 1px solid var(--border);
   position: relative;
   transition: background 0.3s ease;
@@ -425,9 +423,9 @@ pre code {
   content: '';
 }
 
-/* index number on the far left (01, 02, 03 ...) */
+/* index number set by JS (chronological — oldest = 01, newest = highest) */
 .content ul.episode-list li::before {
-  content: counter(episode, decimal-leading-zero);
+  content: attr(data-num);
   position: absolute;
   left: 0;
   top: 1.85rem;
