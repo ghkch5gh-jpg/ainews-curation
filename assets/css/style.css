@@ -363,63 +363,128 @@ pre code {
 .content li::marker { color: var(--text-dim); }
 .content li > p { margin: 0.3rem 0; }
 
-/* ── Episode list (회차 목록) — clickable cards ── */
+/* ── Episode list (회차 목록) — editorial-style entries ── */
 .content ul.episode-list {
   list-style: none;
   padding-left: 0;
-  margin: 1.5rem 0 1.2rem;
-  display: grid;
-  gap: 0.75rem;
+  margin: 1.8rem 0 1.5rem;
+  counter-reset: episode;
+  border-top: 1px solid var(--border);
 }
 .content ul.episode-list li {
   margin: 0;
   padding: 0;
+  counter-increment: episode;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: background 0.3s ease;
 }
 .content ul.episode-list li::marker {
   display: none;
   content: '';
 }
-.content ul.episode-list li a {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.15rem 1.4rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 4px;
-  color: var(--text-bright) !important;
-  font-family: var(--sans);
-  font-size: 1.02rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
-}
-.content ul.episode-list li a::after {
-  content: '→';
-  color: var(--accent);
+
+/* index number on the far left (01, 02, 03 ...) */
+.content ul.episode-list li::before {
+  content: counter(episode, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 1.85rem;
   font-family: var(--mono);
-  font-size: 1.15rem;
-  flex-shrink: 0;
-  transition: transform 0.25s ease;
-  opacity: 0.7;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+  pointer-events: none;
+}
+
+.content ul.episode-list li a {
+  display: block;
+  padding: 1.6rem 3.2rem 1.6rem 3.5rem;
+  text-decoration: none !important;
+  color: var(--text-bright) !important;
+  position: relative;
+  transition: padding-left 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+/* eyebrow line: date + tag (mono, accent) */
+.content ul.episode-list .ep-meta {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.55rem;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+/* main title: serif, large, soft */
+.content ul.episode-list .ep-title {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+/* arrow on the right */
+.content ul.episode-list .ep-arrow {
+  position: absolute;
+  right: 0.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--mono);
+  font-size: 1.3rem;
+  color: var(--text-dim);
+  transition: color 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1);
+  pointer-events: none;
+}
+
+/* hover: subtle slide right + accent reveal */
+.content ul.episode-list li:hover {
+  background: linear-gradient(90deg, rgba(200, 149, 108, 0.06), transparent 60%);
+}
+.content ul.episode-list li:hover::before {
+  color: var(--accent);
 }
 .content ul.episode-list li a:hover {
-  border-color: var(--border-hover);
-  border-left-color: var(--accent);
-  background: rgba(200, 149, 108, 0.06);
-  transform: translateX(2px);
+  padding-left: 4.2rem;
 }
-.content ul.episode-list li a:hover::after {
-  transform: translateX(6px);
+.content ul.episode-list li a:hover .ep-meta {
   opacity: 1;
 }
-@media (max-width: 600px) {
+.content ul.episode-list li a:hover .ep-arrow {
+  color: var(--accent);
+  transform: translateY(-50%) translateX(8px);
+}
+
+/* mobile: tighter padding, smaller serif */
+@media (max-width: 640px) {
+  .content ul.episode-list li::before {
+    top: 1.5rem;
+    font-size: 0.68rem;
+  }
   .content ul.episode-list li a {
-    padding: 1rem 1.1rem;
-    font-size: 0.96rem;
+    padding: 1.3rem 2.6rem 1.3rem 2.8rem;
+  }
+  .content ul.episode-list li a:hover {
+    padding-left: 3rem;
+  }
+  .content ul.episode-list .ep-meta {
+    font-size: 0.66rem;
+    margin-bottom: 0.4rem;
+  }
+  .content ul.episode-list .ep-title {
+    font-size: 1.15rem;
+  }
+  .content ul.episode-list .ep-arrow {
+    font-size: 1.1rem;
+    right: 0.2rem;
   }
 }
 

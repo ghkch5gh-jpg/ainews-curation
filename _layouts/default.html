@@ -181,8 +181,31 @@
         requestAnimationFrame(draw);
       }
 
+      // ── Style episode list links into editorial entries ──
+      function styleEpisodeCards() {
+        var links = document.querySelectorAll('ul.episode-list > li > a');
+        links.forEach(function (a) {
+          if (a.querySelector('.ep-title')) return; // already processed
+          var text = a.textContent.trim();
+          var sepIdx = text.indexOf(' — ');
+          var meta, title;
+          if (sepIdx !== -1) {
+            meta = text.slice(0, sepIdx);
+            title = text.slice(sepIdx + 3);
+          } else {
+            meta = text;
+            title = '';
+          }
+          a.innerHTML =
+            '<span class="ep-meta">' + meta + '</span>' +
+            (title ? '<span class="ep-title">' + title + '</span>' : '') +
+            '<span class="ep-arrow" aria-hidden="true">→</span>';
+        });
+      }
+
       function init() {
         wrapH3Cards();
+        styleEpisodeCards();
         scrollProgress();
         window.addEventListener('scroll', scrollProgress, { passive: true });
         window.addEventListener('resize', scrollProgress, { passive: true });
