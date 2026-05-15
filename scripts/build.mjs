@@ -3,7 +3,7 @@ import { readFile, writeFile, readdir } from "node:fs/promises";
 
 const DRY_RUN = process.env.DRY_RUN === "1";
 const API_KEY = process.env.MANUS_API_KEY;
-const AGENT_PROFILE = process.env.MANUS_AGENT_PROFILE || "manus-1.6";
+const AGENT_PROFILE = process.env.MANUS_AGENT_PROFILE || "manus-1.6-lite";
 const BASE_URL = "https://api.manus.ai/v2";
 const POLL_INTERVAL_MS = 10_000;
 const MAX_POLLS = 90;
@@ -189,7 +189,13 @@ console.log(`이전 2회차에서 URL ${priorUrls.size}개 추출 (중복 회피
 
 const SPEC = await readFile("CURATION_SPEC.md", "utf8");
 
-const prompt = `당신은 한국 건축 현상설계 사무소 직원을 위한 **AI·오픈소스 큐레이터**입니다. 오늘(${dateStr}, ${dayOfWeek}요일) 회차를 작성하세요.
+const prompt = `**중요 사전 지시 — 이 요청은 *채팅 응답* 형식입니다. 작업 요청이 아닙니다.**
+- 어떤 도구·외부 검색·파일시스템도 사용 금지.
+- 파일을 만들거나 디스크에 저장하지 마세요.
+- 응답은 *한 덩어리 JSON*만. 인사·"완성했습니다"·"파일 경로:" 같은 보고문 절대 금지.
+- 첫 글자부터 \`{\` 또는 \`\`\`json 으로 시작.
+
+당신은 한국 건축 현상설계 사무소 직원을 위한 **AI·오픈소스 큐레이터**입니다. 오늘(${dateStr}, ${dayOfWeek}요일) 회차를 작성하세요.
 
 # 핵심 명세 (필독)
 
