@@ -1,0 +1,102 @@
+[
+  {
+    "name": "GitHub Trending (daily, all)",
+    "url": "https://github.com/trending?since=daily",
+    "kind": "html"
+  },
+  {
+    "name": "GitHub Trending (weekly, all)",
+    "url": "https://github.com/trending?since=weekly",
+    "kind": "html"
+  },
+  {
+    "name": "GitHub topic: bim",
+    "url": "https://github.com/topics/bim",
+    "kind": "html"
+  },
+  {
+    "name": "GitHub topic: ifc",
+    "url": "https://github.com/topics/ifc",
+    "kind": "html"
+  },
+  {
+    "name": "GitHub topic: grasshopper",
+    "url": "https://github.com/topics/grasshopper",
+    "kind": "html"
+  },
+  {
+    "name": "GitHub topic: generative-design",
+    "url": "https://github.com/topics/generative-design",
+    "kind": "html"
+  },
+  {
+    "name": "GitHub topic: parametric-design",
+    "url": "https://github.com/topics/parametric-design",
+    "kind": "html"
+  },
+  {
+    "name": "GitHub topic: floor-plan",
+    "url": "https://github.com/topics/floor-plan",
+    "kind": "html"
+  },
+  {
+    "name": "GitHub topic: gaussian-splatting",
+    "url": "https://github.com/topics/gaussian-splatting",
+    "kind": "html"
+  },
+  {
+    "name": "GitHub topic: image-to-3d",
+    "url": "https://github.com/topics/image-to-3d",
+    "kind": "html"
+  },
+  {
+    "name": "GitHub Search API (architecture/bim/ifc, recent + popular)",
+    "url": "https://api.github.com/search/repositories?q=(architecture+OR+bim+OR+ifc+OR+%22floor+plan%22+OR+%22building+information%22)+stars:>30+pushed:>__SINCE__&sort=stars&order=desc&per_page=20",
+    "kind": "json-search"
+  },
+  {
+    "name": "HuggingFace trending models",
+    "url": "https://huggingface.co/models?sort=trending",
+    "kind": "html"
+  },
+  {
+    "name": "HuggingFace image-to-3d",
+    "url": "https://huggingface.co/models?other=image-to-3d&sort=trending",
+    "kind": "html"
+  },
+  {
+    "name": "arXiv cs.GR new",
+    "url": "https://arxiv.org/list/cs.GR/new",
+    "kind": "html"
+  },
+  {
+    "name": "arXiv cs.CV new",
+    "url": "https://arxiv.org/list/cs.CV/new",
+    "kind": "html"
+  },
+  {
+    "name": "HN Algolia: architecture/BIM/floor plan",
+    "url": "https://hn.algolia.com/api/v1/search?query=(architecture+OR+BIM+OR+%22floor+plan%22+OR+IFC+OR+NeRF+OR+%22gaussian+splatting%22)&tags=story&numericFilters=points>30,created_at_i>__SINCE_TS__",
+    "kind": "json"
+  },
+  {
+    "name": "Reddit r/architecture top week",
+    "url": "https://www.reddit.com/r/architecture/top.json?t=week&limit=25",
+    "kind": "json"
+  },
+  {
+    "name": "Reddit r/Rhino top week",
+    "url": "https://www.reddit.com/r/Rhino/top.json?t=week&limit=25",
+    "kind": "json"
+  },
+  {
+    "name": "Reddit r/grasshopper3d top week",
+    "url": "https://www.reddit.com/r/grasshopper3d/top.json?t=week&limit=25",
+    "kind": "json"
+  },
+  {
+    "name": "Reddit r/BIM top week",
+    "url": "https://www.reddit.com/r/BIM/top.json?t=week&limit=25",
+    "kind": "json"
+  }
+]

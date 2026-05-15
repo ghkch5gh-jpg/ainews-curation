@@ -1,0 +1,32 @@
+name: Build daily AI news curation
+
+on:
+  schedule:
+    # 매일 23:00 UTC = 다음 날 08:00 KST.
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: node scripts/build.mjs
+        env:
+          MANUS_API_KEY: ${{ secrets.MANUS_API_KEY }}
+          MANUS_AGENT_PROFILE: manus-1.6
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || git commit -m "curation: $(TZ='Asia/Seoul' date +%Y-%m-%d)"
+          git push
